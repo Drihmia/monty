@@ -8,8 +8,9 @@
 #include <sys/uio.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <errno.h>
 
-extern char **cmd_line;
+extern char *Mode;
 
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
@@ -42,12 +43,13 @@ typedef struct instruction_s
 } instruction_t;
 
 /* --------------- instructions ------------------ */
-void push(stack_t **stack, unsigned int line_number);
+void (*get_op_func(char *s))(stack_t **stack, unsigned int line_number);
+int push(stack_t **stack, unsigned int line_number, char *num);
 void pull(stack_t **stack, unsigned int line_number);
-void pall(stack_t **stack, unsigned int line_number);
 void pint(stack_t **stack, unsigned int line_number);
+void pall(stack_t **stack, unsigned int line_number);
 void pop(stack_t **stack, unsigned int line_number);
-void sawp(stack_t **stack, unsigned int line_number);
+void swap(stack_t **stack, unsigned int line_number);
 void add(stack_t **stack, unsigned int line_number);
 void sub(stack_t **stack, unsigned int line_number);
 void mul(stack_t **stack, unsigned int line_number);
@@ -58,6 +60,8 @@ void pchar(stack_t **stack, unsigned int line_number);
 void pstr(stack_t **stack, unsigned int line_number);
 void rotl(stack_t **stack, unsigned int line_number);
 void rotr(stack_t **stack, unsigned int line_number);
+void _stack(stack_t **stack, unsigned int line_number);
+void queue(stack_t **stack, unsigned int line_number);
 
 /* utilities for manupilating the doubly linked list */
 
@@ -81,9 +85,12 @@ void free_arr_str(char **arr_str);
 
 /* -----------errors-----------*/
 void print_error(char *string);
+void unkn(stack_t **stack, unsigned int line_number);
+
 
 /* -----------MOCKS-----------*/
 int _isdigit(char);
 int _atoi(char *);
+
 #endif
 
