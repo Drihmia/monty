@@ -13,7 +13,7 @@ int line_number = 1;
 int main(int ac, char **av)
 {
 	FILE *file = NULL;
-	char *line, **cmd_line;
+	char *line = NULL, *cmd_line[ARGS_SIZE];
 	size_t size_line = 1;
 	stack_t *stack = NULL;
 	int err = 0;
@@ -25,21 +25,19 @@ int main(int ac, char **av)
 		{
 			if (strncmp(line, "#", 1) && strncmp(line, "nop", 3))
 			{
-				cmd_line = tokenize(line);
-				if (cmd_line)
+				if (tokenize(line, cmd_line) && cmd_line[0])
 				{
 					if (!strcmp(cmd_line[0], "push"))
 						err = push(&stack, line_number, cmd_line[1]);
 					else
 						get_op_func(cmd_line[0])(&stack, line_number);
 				}
-				if (err == 1 || errno == 2 || errno == 3)
+				if (err || errno)
 				{
 					fclose(file), free(line), free_stack(stack), errno = 0;
-					free_arr_str(cmd_line), exit(EXIT_FAILURE);
+					exit(EXIT_FAILURE);
 				}
 
-				free_arr_str(cmd_line);
 			}
 			line_number++;
 		}

@@ -32,6 +32,31 @@ void (*get_op_func(char *s))(stack_t **stack, unsigned int line_number)
 }
 
 /**
+ * add - add
+ * @stack: pointer to the header of DLL.
+ * @line_number: the line number of the op command.
+ */
+void add(stack_t **stack, unsigned int line_number)
+{
+	int len = stack_len(*stack);
+	stack_t *tmp;
+	(void)line_number;
+
+	if (len < 2)
+	{
+		/* TODO: handle error msg */
+		print_error("can't swap, stack too short\n");
+		errno = 1;
+		return;
+	}
+	tmp = (*stack)->next;
+	(*stack)->prev = (*stack)->next;
+	(*stack)->next = tmp->next;
+	tmp->prev = 0;
+	tmp->next = *stack;
+	*stack = tmp;
+}
+/**
  * swap - swap
  * @stack: pointer to the header of DLL.
  * @line_number: the line number of the op command.
@@ -46,8 +71,8 @@ void swap(stack_t **stack, unsigned int line_number)
 	{
 		/* TODO: exit handler(free(cmd_line, stack), print, exit status)*/
 		print_error("can't swap, stack too short\n");
-		free_stack(*stack);
-		exit(EXIT_FAILURE);
+		errno = 1;
+		return;
 	}
 	tmp = (*stack)->next;
 	(*stack)->prev = (*stack)->next;

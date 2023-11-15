@@ -5,44 +5,15 @@
  * @line: the line
  * Return: array of string,
  */
-char **tokenize(char *line)
+char **tokenize(char *line, char **cmd_line)
 {
-	char *token_1, *token_2, **cmd_line;
-	int a = 0;
-
 	if (!line)
 		return (NULL);
-	token_1 = strtok(line, " \n\t\v\f\r");
-	if (!token_1)
-		return (NULL);
-	token_2 = strtok(NULL, " \n\t\v\f\r");
-	a = token_2 ? 3 : 2;
-	cmd_line = malloc(a * sizeof(char *));
-	if (!cmd_line)
-	{
-		print_error("Error: malloc failed\n");
-		exit(EXIT_FAILURE);
-	}
-	cmd_line[0] = malloc(strlen(token_1) + 1);
-	if (!cmd_line[0])
-	{
-		print_error("Error: malloc failed\n");
-		exit(EXIT_FAILURE);
-	}
-	strcpy(cmd_line[0], token_1);
-	if (a == 3)
-	{
-		cmd_line[1] = malloc(strlen(token_2) + 1);
-		if (!cmd_line[0])
-		{
-			print_error("Error: malloc failed\n");
-			exit(EXIT_FAILURE);
-		}
-		strcpy(cmd_line[1], token_2);
-		cmd_line[2] = NULL;
-	}
-	else
-		cmd_line[1] = NULL;
+
+	cmd_line[0] = strtok(line, " \n\t\v\f\r");
+	cmd_line[1] = strtok(NULL, " \n\t\v\f\r");
+	cmd_line[2] = NULL;
+
 	return (cmd_line);
 }
 

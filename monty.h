@@ -10,6 +10,9 @@
 #include <fcntl.h>
 #include <errno.h>
 
+/* -----------MACROS-----------*/
+#define ARGS_SIZE 3
+/* -----------GLOBALS-----------*/
 extern char *Mode;
 
 /**
@@ -80,7 +83,7 @@ int delete_dnodeint_at_index(stack_t **head, unsigned int index);
 
 /* -----------funtions---------*/
 FILE *open_file(char *file_name);
-char **tokenize(char *line);
+char **tokenize(char *line, char **);
 void free_arr_str(char **arr_str);
 
 /* -----------errors-----------*/
