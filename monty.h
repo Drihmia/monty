@@ -82,5 +82,8 @@ void free_arr_str(char **arr_str);
 /* -----------errors-----------*/
 void print_error(char *string);
 
+/* -----------MOCKS-----------*/
+int _isdigit(char);
+int _atoi(char *);
 #endif
 
