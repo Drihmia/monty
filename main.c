@@ -58,7 +58,7 @@ int main(int ac, char **av)
  */
 void unkn(stack_t **stack, unsigned int line_number)
 {
-	int buf[3];
+	char buf[3];
 
 	(void) stack;
 	sprintf(buf, "%d", line_number);

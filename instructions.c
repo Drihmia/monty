@@ -16,7 +16,6 @@ void (*get_op_func(char *s))(stack_t **stack, unsigned int line_number)
 		{NULL, NULL}
 	};
 	int i = 0;
-	int buf[3];
 
 	while (ops[i].opcode)
 	{
@@ -38,7 +37,6 @@ void (*get_op_func(char *s))(stack_t **stack, unsigned int line_number)
 int push(stack_t **stack, unsigned int line_number, char *num)
 {
 	int n = 0;
-	char *str;
 
 	(void) line_number;
 	if (num)
@@ -47,7 +45,7 @@ int push(stack_t **stack, unsigned int line_number, char *num)
 		errno = 1;
 	if (errno == 1)
 	{
-		int buf[3];
+		char buf[3];
 
 		sprintf(buf, "%d", line_number);
 		print_error("L");
@@ -82,7 +80,7 @@ void pint(stack_t **stack, unsigned int line_number)
 {
 	if (!*stack)
 	{
-		int buf[3];
+		char buf[3];
 
 
 		sprintf(buf, "%d", line_number);
@@ -104,7 +102,7 @@ void pop(stack_t **stack, unsigned int line_number)
 {
 	if (!*stack)
 	{
-		int buf[3];
+		char buf[3];
 
 
 		sprintf(buf, "%d", line_number);
