@@ -10,11 +10,16 @@
 #include <fcntl.h>
 #include <errno.h>
 
+/* -----------ALIASES-----------*/
+/* typedef struct stack_s stack_t; */
+
 /* -----------MACROS-----------*/
 #define ARGS_SIZE 3
+
 /* -----------GLOBALS-----------*/
 extern char *Mode;
 
+/* -----------STRUCTS-----------*/
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
  * @n: integer
@@ -44,8 +49,53 @@ typedef struct instruction_s
 	char *opcode;
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
+/**
+ * struct generic_s - generic struct to cast it later
+ * @opcode: the opcode
+ * @f: function to handle the opcode
+ *
+ * Description: opcode and its function
+ * for stack, queues, LIFO, FIFO
+ */
+typedef struct generic_s
+{
+	char *opcode;
+	void (*f)(void);
+} generic_t;
 
-/* --------------- instructions ------------------ */
+/**
+ * struct push_s - push
+ *
+ * @opcode: the opcode
+ * @f: function to handle the opcode
+ *
+ * Description: opcode and its function
+ */
+typedef struct push_s
+{
+	char *opcode;
+	void (*f)(stack_t **stack, unsigned int line_number, char *num);
+} push_t;
+
+/**
+ * struct operations_s - operations arguments
+ *
+ * @opcode: the opcode
+ * @line_number: the opcode
+ * @num: the opcode
+ * @stack: the opcode
+ *
+ * Description: opcode and its function
+ */
+typedef struct operations_s
+{
+	stack_t *stack;
+	unsigned int line_number;
+	char *num;
+	char *opcode;
+} opt_arg;
+
+/* ---------------INSTRUCTIONS------------------ */
 void (*get_op_func(char *s))(stack_t **stack, unsigned int line_number);
 int push(stack_t **stack, unsigned int line_number, char *num);
 void pull(stack_t **stack, unsigned int line_number);
@@ -81,14 +131,15 @@ void free_stack(stack_t *head);
 /* pop or remove and node */
 int delete_dnodeint_at_index(stack_t **head, unsigned int index);
 
-/* -----------funtions---------*/
+/* -----------UTILS---------*/
 FILE *open_file(char *file_name);
 char **tokenize(char *line, char **);
 void free_arr_str(char **arr_str);
+void (*wrapper(opt_arg * op_arg))(stack_t **stack, unsigned int line_number);
 
 /* -----------errors-----------*/
-void print_error(char *string);
-void unkn(stack_t **stack, unsigned int line_number);
+void print_error(char *string, int line_number);
+void unkn(stack_t **stack, unsigned int line_number, char *opcode);
 
 
 /* -----------MOCKS-----------*/

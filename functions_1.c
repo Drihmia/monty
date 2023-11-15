@@ -3,6 +3,7 @@
 /**
  * tokenize - tokenize each line of the opcode.
  * @line: the line
+ * @cmd_line: the array to hold the tokens from @line
  * Return: array of string,
  */
 char **tokenize(char *line, char **cmd_line)
@@ -46,9 +47,7 @@ FILE *open_file(char *file_name)
 	file = fopen(file_name, "r");
 	if (!file)
 	{
-		print_error("Error: Can't open file ");
-		print_error(file_name);
-		print_error("\n");
+		dprintf(STDERR_FILENO, "Error: Can't open file %s\n", file_name);
 		exit(EXIT_FAILURE);
 	}
 	return (file);
@@ -56,13 +55,12 @@ FILE *open_file(char *file_name)
 /**
  * print_error - print errors to stderr.
  * @string: string to address to stder.
+ * @line_number: line number from opcode
  * Return: None.
  */
-void print_error(char *string)
+void print_error(char *string, int line_number)
 {
-	size_t size = strlen(string) + 1;
-
-	write(2, string, size);
+	dprintf(STDERR_FILENO, "L%d: %s\n", line_number, string);
 }
 
 

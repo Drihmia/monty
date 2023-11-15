@@ -1,8 +1,8 @@
+#include <stdio.h>
 #define _POSIX_C_SOURCE 200809L
 #include "monty.h"
 void help(void);
 char *Mode = "stack";
-int line_number = 1;
 
 /**
  * main- Entry point.
@@ -15,38 +15,39 @@ int main(int ac, char **av)
 	FILE *file = NULL;
 	char *line = NULL, *cmd_line[ARGS_SIZE];
 	size_t size_line = 1;
-	stack_t *stack = NULL;
-	int err = 0;
+	void (*op_func)(stack_t **stack, unsigned int line_number);
+	opt_arg op_arg = {NULL, 1, 0, 0};
 
 	if (ac == 2)
 	{
-		file = open_file(av[1]), line = malloc(1);
+		file = open_file(av[1]);
 		while (getline(&line, &size_line, file) != -1)
 		{
-			if (strncmp(line, "#", 1) && strncmp(line, "nop", 3))
+			if (tokenize(line, cmd_line) && cmd_line[0] && strncmp(cmd_line[0], "#", 1))
 			{
-				if (tokenize(line, cmd_line) && cmd_line[0])
+				op_arg.opcode = cmd_line[0], op_arg.num = cmd_line[1];
+				op_func = wrapper(&op_arg);
+				if (op_func)
+					op_func(&op_arg.stack, op_arg.line_number);
+				if (errno)
 				{
-					if (!strcmp(cmd_line[0], "push"))
-						err = push(&stack, line_number, cmd_line[1]);
-					else
-						get_op_func(cmd_line[0])(&stack, line_number);
-				}
-				if (err || errno)
-				{
-					fclose(file), free(line), free_stack(stack), errno = 0;
+					/*TODO: abstract this to separate function */
+					fclose(file);
+					free(line);
+					free_stack(op_arg.stack);
+					errno = 0;
 					exit(EXIT_FAILURE);
 				}
 
 			}
-			line_number++;
+			op_arg.line_number++;
 		}
-		fclose(file), free(line), free_stack(stack);
+		fclose(file), free(line), free_stack(op_arg.stack);
 	}
 	else
 	{
-		print_error("USAGE: monty file\n");
-		return (EXIT_FAILURE);
+		dprintf(STDERR_FILENO, "USAGE: monty file\n");
+		exit(EXIT_FAILURE);
 	}
 
 	return (EXIT_SUCCESS);
@@ -55,18 +56,14 @@ int main(int ac, char **av)
  * unkn - handle the case where the user enter unknown cmd opcode.
  * @stack: pointer to head of a DLL.
  * @line_number: line number.
+ * @opcode: operation code string
  * Return: None.
  */
-void unkn(stack_t **stack, unsigned int line_number)
+void unkn(stack_t **stack, unsigned int line_number, char *opcode)
 {
-	char buf[3];
-
 	(void) stack;
-	sprintf(buf, "%d", line_number);
-	print_error("L");
-	print_error(buf);
-	print_error(": unknown instruction ");
-	print_error("\n");
+	dprintf(STDERR_FILENO, "L%d: unknown instruction %s\n", line_number, opcode);
+
 	errno = 3;
 }
 
