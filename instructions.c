@@ -17,6 +17,7 @@ void (*get_op_func(char *s))(stack_t **stack, unsigned int line_number)
 		{"unkn", unkn},
 		{"swap", swap},
 		{"add", add},
+		{"nop", nop},
 		{NULL, NULL}
 	};
 	int i = 0;
@@ -33,7 +34,17 @@ void (*get_op_func(char *s))(stack_t **stack, unsigned int line_number)
 }
 
 /**
- * add - add
+ * nop - opcode nop doesn’t do anything.
+ * @stack: pointer to the header of DLL.
+ * @line_number: the line number of the op command.
+ */
+void nop(stack_t **stack, unsigned int line_number)
+{
+	(void)stack;
+	(void)line_number;
+}
+/**
+ * add - adds the top two elements of the stack.
  * @stack: pointer to the header of DLL.
  * @line_number: the line number of the op command.
  */
@@ -46,7 +57,7 @@ void add(stack_t **stack, unsigned int line_number)
 	if (len < 2)
 	{
 		/* TODO: handle error msg */
-		print_error("can't swap, stack too short\n");
+		print_error("can't add, stack too short\n");
 		errno = 1;
 		return;
 	}
