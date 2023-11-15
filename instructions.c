@@ -16,6 +16,7 @@ void (*get_op_func(char *s))(stack_t **stack, unsigned int line_number)
 		{"queue", queue},
 		{"unkn", unkn},
 		{"swap", swap},
+		{"add", add},
 		{NULL, NULL}
 	};
 	int i = 0;
@@ -49,12 +50,11 @@ void add(stack_t **stack, unsigned int line_number)
 		errno = 1;
 		return;
 	}
-	tmp = (*stack)->next;
-	(*stack)->prev = (*stack)->next;
-	(*stack)->next = tmp->next;
-	tmp->prev = 0;
-	tmp->next = *stack;
-	*stack = tmp;
+	tmp = *stack;
+	(*stack)->next->n += (*stack)->n;
+	(*stack)->next->prev = 0;
+	*stack = (*stack)->next;
+	free(tmp);
 }
 /**
  * swap - swap
