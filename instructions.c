@@ -15,6 +15,7 @@ void (*get_op_func(char *s))(stack_t **stack, unsigned int line_number)
 		{"stack", _stack},
 		{"queue", queue},
 		{"unkn", unkn},
+		{"swap", swap},
 		{NULL, NULL}
 	};
 	int i = 0;
@@ -28,6 +29,32 @@ void (*get_op_func(char *s))(stack_t **stack, unsigned int line_number)
 	return (ops[i - 1].f);
 
 	return (NULL);
+}
+
+/**
+ * swap - swap
+ * @stack: pointer to the header of DLL.
+ * @line_number: the line number of the op command.
+ */
+void swap(stack_t **stack, unsigned int line_number)
+{
+	int len = stack_len(*stack);
+	stack_t *tmp;
+	(void)line_number;
+
+	if (len < 2)
+	{
+		/* TODO: exit handler(free(cmd_line, stack), print, exit status)*/
+		print_error("can't swap, stack too short\n");
+		free_stack(*stack);
+		exit(EXIT_FAILURE);
+	}
+	tmp = (*stack)->next;
+	(*stack)->prev = (*stack)->next;
+	(*stack)->next = tmp->next;
+	tmp->prev = 0;
+	tmp->next = *stack;
+	*stack = tmp;
 }
 /**
  * push - push an element to the stack.
