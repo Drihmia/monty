@@ -38,12 +38,8 @@ typedef struct instruction_s
 ```
 
 ## The Monty language
-
 <figure>
-    <img src="https://rb.gy/oezx42"
-         alt="monty language pic">
-    <figcaption>Monty langauge stack, queue</figcaption>
+    <img src="https://drive.google.com/uc?export=view&id=16-g07Qw2QdPFVIo-K0IJbr5FoxFR9Uff" alt="monty language stack, queue">
 </figure>
-
 
 Monty 0.98 is a scripting language that is first compiled into Monty byte codes (Just like Python). It relies on a unique stack, with specific instructions to manipulate it. The goal of this project is to create an interpreter for Monty ByteCodes files.
