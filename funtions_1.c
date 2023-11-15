@@ -55,9 +55,13 @@ void free_arr_str(char **arr_str)
 {
 	int i = 0;
 
-	while (arr_str[i])
-		free(arr_str[i]), i++;
-	free(arr_str);
+	if (arr_str)
+	{
+		while (arr_str[i])
+			free(arr_str[i]), i++;
+
+		free(arr_str);
+	}
 }
 /**
  * open_file - open a file.
