@@ -22,7 +22,11 @@ int _atoi(char *s)
 
 	return (num * sign);
 }
-
+/**
+ * _isdigit - check if the char is digit or not.
+ * @c: char.
+ * Return: 1 if yes, 0 of not.
+ */
 int _isdigit(char c)
 {
 	return (c >= '0' && c <= '9');

@@ -1,33 +1,46 @@
 #define _POSIX_C_SOURCE 200809L
 #include "monty.h"
+void help(void);
+char *Mode = "stack";
+int line_number = 1;
 
+/**
+ * main- Entry point.
+ * @ac: counter variable.
+ * @av: array of strings variable
+ * Return: 0 on success.
+ */
 int main(int ac, char **av)
 {
 	FILE *file = NULL;
 	char *line, **cmd_line;
 	size_t size_line = 1;
-	int i = 1;
+	stack_t *stack = NULL;
+	int err = 0;
 
 	if (ac == 2)
 	{
-		file = open_file(av[1]);
-		line = malloc(1);
-		printf("Has been opened the file\n");
+		file = open_file(av[1]), line = malloc(1);
 		while (getline(&line, &size_line, file) != -1)
 		{
 			cmd_line = tokenize(line);
 			if (cmd_line)
 			{
-				printf("the opcode :%s\n", cmd_line[0]);
-				if(cmd_line[1])
-					printf("the value : %s\n", cmd_line[1]);
-				free_arr_str(cmd_line);
+				if (!strcmp(cmd_line[0], "push"))
+					err = push(&stack, line_number, cmd_line[1]);
+				else
+					get_op_func(cmd_line[0])(&stack, line_number);
 			}
-			i++;
-			printf("line N : %d\n", i);
+			if (err == 1 || errno == 2 || errno == 3)
+			{
+				fclose(file), free(line), free_stack(stack), errno = 0;
+				free_arr_str(cmd_line), exit(EXIT_FAILURE);
+			}
+
+			free_arr_str(cmd_line);
+			line_number++;
 		}
-		fclose(file);
-		free(line);
+		fclose(file), free(line), free_stack(stack);
 	}
 	else
 	{
@@ -37,9 +50,23 @@ int main(int ac, char **av)
 
 	return (EXIT_SUCCESS);
 }
+/**
+ * unkn - handle the case where the user enter unknown cmd opcode.
+ * @stack: pointer to head of a DLL.
+ * @line_number: line number.
+ * Return: None.
+ */
+void unkn(stack_t **stack, unsigned int line_number)
+{
+	int buf[3];
 
-#if 0
-	printf("line : %s\n", line);
-	printf("token_1: %s\n", token_1);
-	printf("werghjk\n");
-#endif
+	(void) stack;
+	sprintf(buf, "%d", line_number);
+	print_error("L");
+	print_error(buf);
+	print_error(": unknown instruction ");
+	print_error("\n");
+	errno = 3;
+}
+
+
