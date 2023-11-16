@@ -29,6 +29,7 @@ int main(int ac, char **av)
 				op_func = wrapper(&op_arg);
 				if (op_func)
 					op_func(&op_arg.stack, op_arg.line_number);
+
 				if (errno)
 				{
 					/*TODO: abstract this to separate function */
