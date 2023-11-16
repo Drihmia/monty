@@ -18,11 +18,14 @@ void (*wrapper(opt_arg * op_arg))(stack_t **stack, unsigned int line_number)
 		{"queue", (void(*)(void))queue},
 		{"swap", (void(*)(void))swap},
 		{"add", (void(*)(void))add},
+		{"sub", (void(*)(void))sub},
 		{"mul", (void(*)(void))mul},
+		{"div", (void(*)(void))_div},
 		{"mod", (void(*)(void))mod},
 		{"pchar", (void(*)(void))pchar},
 		{"rotr", (void(*)(void))rotr},
 		{"nop", (void(*)(void))nop},
+		{"pstr", (void(*)(void))pstr},
 		{NULL, NULL}
 	};
 	while (ops[i].opcode)
