@@ -19,6 +19,7 @@ void (*wrapper(opt_arg * op_arg))(stack_t **stack, unsigned int line_number)
 		{"add", (void(*)(void))add},
 		{"sub", (void(*)(void))sub},
 		{"mul", (void(*)(void))mul},
+		{"div", (void(*)(void))_div},
 		{"mod", (void(*)(void))mod},
 		{"nop", (void(*)(void))nop},
 		{"push", (void(*)(void))push},

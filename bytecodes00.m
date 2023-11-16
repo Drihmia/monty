@@ -3,6 +3,6 @@ push 2
 push 90
 push 3
 pint
-sub
+div
 
 pall

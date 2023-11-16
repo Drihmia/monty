@@ -22,6 +22,7 @@ void pchar(stack_t **stack, unsigned int line_number)
 	}
 	printf("%c\n", (*stack)->n);
 }
+
 /**
  * sub - subtracts the top element of the stack from the second
  * 	top element of the stack.
@@ -40,6 +41,33 @@ void sub(stack_t **stack, unsigned int line_number)
 	}
 	/* ----- sub's operation ----- */
 	(*stack)->next->n -= (*stack)->n;
+
+	/* ---- node's deletions ----- */
+	tmp = *stack;
+	(*stack)->next->prev = 0;
+	*stack = (*stack)->next;
+	free(tmp);
+}
+
+
+/**
+ * _div - divides the top element of the stack from the second
+ * 	top element of the stack.
+ * @stack: pointer to the header of DLL.
+ * @line_number: the line number of the op command.
+ */
+void _div(stack_t **stack, unsigned int line_number)
+{
+	stack_t *tmp;
+
+	if (!*stack || !(*stack)->next)
+	{
+		print_error("can't div, stack too short", line_number);
+		errno = 1;
+		return;
+	}
+	/* ----- div's operation ----- */
+	(*stack)->next->n /= (*stack)->n;
 
 	/* ---- node's deletions ----- */
 	tmp = *stack;
