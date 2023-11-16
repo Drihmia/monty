@@ -90,9 +90,18 @@ void _div(stack_t **stack, unsigned int line_number)
  */
 void pstr(stack_t **stack, unsigned int line_number)
 {
-	while (*stack && ((*stack)->n > 0 || (*stack)->n <= 127))
+	stack_t *tmp;
+
+	(void) line_number;
+	tmp = *stack;
+
+	while (tmp && ((tmp)->n >= 0 || (tmp)->n <= 127))
 	{
-		printf("%c\n", (*stack)->n);
+		if ((tmp)->n == 0)
+			break;
+
+		printf("%c\n", (tmp)->n);
+		(tmp) = (tmp)->next;
 	}
 }
 
