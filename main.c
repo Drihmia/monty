@@ -85,6 +85,14 @@ void queue(stack_t **stack, unsigned int line_number)
 	(void) stack, (void) line_number;
 	Mode = "queue";
 }
+
+/**
+ * hundler - close file stream, free the DLL and the buufer from getline
+ * @afile: address of file stream.
+ * @aline: address of buffer from getline.
+ * @astack: address of the head's DLL of the stack.
+ * Return: None.
+ */
 void hundler(FILE **afile, char **aline, stack_t **astack)
 {
 		fclose(*afile), free(*aline), free_stack(*astack);

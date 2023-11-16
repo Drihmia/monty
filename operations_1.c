@@ -142,21 +142,18 @@ stack_t *insert_dnodeint_at_index(stack_t **h, unsigned int idx, int n)
 		return (NULL);
 	if (!he || he->prev == NULL)
 		return (add_dnodeint(h, n));
-	else if (idx == i + 1)
+	if (idx == i + 1)
 		return (add_dnodeint_end(h, n));
-	else
+	new = malloc(sizeof(*new));
+	if (!new)
 	{
-		new = malloc(sizeof(*new));
-		if (!new)
-		{
-			dprintf(STDERR_FILENO, "Error: malloc failed\n");
-			errno = 2;
-			return (NULL);
-		}
-		new->n = n, new->next = he, new->prev = he->prev;
-		he->prev->next = new, he->prev = new;
-		he = new;
+		dprintf(STDERR_FILENO, "Error: malloc failed\n");
+		errno = 2;
+		return (NULL);
 	}
+	new->n = n, new->next = he, new->prev = he->prev;
+	he->prev->next = new, he->prev = new;
+	he = new;
 
 	return (new);
 }
