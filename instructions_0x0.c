@@ -21,6 +21,7 @@ void (*wrapper(opt_arg * op_arg))(stack_t **stack, unsigned int line_number)
 		{"mul", (void(*)(void))mul},
 		{"mod", (void(*)(void))mod},
 		{"pchar", (void(*)(void))pchar},
+		{"rotr", (void(*)(void))rotr},
 		{"nop", (void(*)(void))nop},
 		{NULL, NULL}
 	};
