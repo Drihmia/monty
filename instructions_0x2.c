@@ -95,9 +95,9 @@ void pstr(stack_t **stack, unsigned int line_number)
 	(void) line_number;
 	tmp = *stack;
 
-	while (tmp && ((tmp)->n >= 0 || (tmp)->n <= 127))
+	while (tmp)
 	{
-		if ((tmp)->n == 0)
+		if ((tmp)->n == 0 || (tmp)->n < 0 || (tmp)->n > 127)
 			break;
 
 		printf("%c", (tmp)->n);
