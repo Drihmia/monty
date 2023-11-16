@@ -11,8 +11,8 @@ char **tokenize(char *line, char **cmd_line)
 	if (!line)
 		return (NULL);
 
-	cmd_line[0] = strtok(line, " \n\t\v\f\r");
-	cmd_line[1] = strtok(NULL, " \n\t\v\f\r");
+	cmd_line[0] = strtok(line, " \n\t\v");
+	cmd_line[1] = strtok(NULL, " \n\t\v");
 	cmd_line[2] = NULL;
 
 	return (cmd_line);
