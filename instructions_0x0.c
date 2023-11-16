@@ -4,7 +4,7 @@
  * wrapper - selects the correct function to perform the
  * instruction asked by the user.
  * @op_arg: struct (read monty.h for details)
- * Return: pointer to fu:xnction depending on the oprater chosen by the user.
+ * Return: pointer to function depending on the operator chosen by the user.
  */
 void (*wrapper(opt_arg * op_arg))(stack_t **stack, unsigned int line_number)
 {
@@ -21,6 +21,7 @@ void (*wrapper(opt_arg * op_arg))(stack_t **stack, unsigned int line_number)
 		{"mod", (void(*)(void))mod},
 		{"nop", (void(*)(void))nop},
 		{"push", (void(*)(void))push},
+		{"pchar", (void(*)(void))pchar},
 		{NULL, NULL}
 	};
 	while (ops[i].opcode)
