@@ -28,6 +28,7 @@ void pchar(stack_t **stack, unsigned int line_number)
  * top element of the stack.
  * @stack: pointer to the header of DLL.
  * @line_number: the line number of the op command.
+ * Return: None.
  */
 void sub(stack_t **stack, unsigned int line_number)
 {
@@ -55,6 +56,7 @@ void sub(stack_t **stack, unsigned int line_number)
  * top element of the stack.
  * @stack: pointer to the header of DLL.
  * @line_number: the line number of the op command.
+ * Return: None.
  */
 void _div(stack_t **stack, unsigned int line_number)
 {
@@ -87,6 +89,7 @@ void _div(stack_t **stack, unsigned int line_number)
  * followed by a new line.
  * @stack: pointer to the header of DLL.
  * @line_number: the line number of the op command.
+ * Return: None.
  */
 void pstr(stack_t **stack, unsigned int line_number)
 {
@@ -106,3 +109,34 @@ void pstr(stack_t **stack, unsigned int line_number)
 	printf("\n");
 }
 
+/**
+ * rotl -  rotates the stack to the top.
+ * @stack: pointer to the header of DLL.
+ * @line_number: the line number of the op command.
+ * Return: None.
+ */
+void rotl(stack_t **stack, unsigned int line_number)
+{
+	stack_t *ref = *stack, *mov = NULL;
+
+	(void) line_number;
+
+	if ((*stack) && (*stack)->next)
+	{
+		/* moving the head STACK forward by one node */
+		(*stack) = (*stack)->next;
+		(*stack)->prev = NULL;
+
+		/* moving the head MOV to the last node */
+		mov = *stack;
+		while (mov->next)
+		{
+			mov = mov->next;
+		}
+
+		/* attatch the head REF (node to rotl) to the last node */
+		mov->next = ref;
+		ref->prev = mov;
+		ref->next = NULL;
+	}
+}
