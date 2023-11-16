@@ -114,7 +114,7 @@ void rotr(stack_t **stack, unsigned int line_number)
 	stack_t *tail = *stack;
 	(void)line_number;
 
-	if (!*stack)
+	if (!*stack || !(*stack)->next)
 		return;
 
 	for (; tail->next; tail = tail->next)
