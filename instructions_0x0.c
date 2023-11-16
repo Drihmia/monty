@@ -13,15 +13,15 @@ void (*wrapper(opt_arg * op_arg))(stack_t **stack, unsigned int line_number)
 		{"pall", (void(*)(void))pall},
 		{"pint", (void(*)(void))pint},
 		{"pop", (void(*)(void))pop},
+		{"push", (void(*)(void))push},
 		{"stack", (void(*)(void))_stack},
 		{"queue", (void(*)(void))queue},
 		{"swap", (void(*)(void))swap},
 		{"add", (void(*)(void))add},
 		{"mul", (void(*)(void))mul},
 		{"mod", (void(*)(void))mod},
-		{"nop", (void(*)(void))nop},
-		{"push", (void(*)(void))push},
 		{"pchar", (void(*)(void))pchar},
+		{"nop", (void(*)(void))nop},
 		{NULL, NULL}
 	};
 	while (ops[i].opcode)
