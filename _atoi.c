@@ -7,16 +7,19 @@
  */
 int _atoi(char *s)
 {
-	unsigned int num = 0, sign = 1;
+	int num = 0, sign = 1;
 
 	while (*s)
 	{
 		if (*s == '-')
-			sign *= 1;
-		if (_isdigit(*s))
+			sign *= -1;
+		else if (_isdigit(*s))
 			num = (num * 10) + (*s - 48);
 		else
+		{
 			errno = 1;
+			return (0);
+		}
 		s++;
 	}
 
