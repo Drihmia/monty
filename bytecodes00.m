@@ -1,6 +1,7 @@
 push 1
 push 2
 push 3
+<<<<<<< HEAD
 push 4
 push 5
 push 6
@@ -771,3 +772,8 @@ push 0
 pint
 rotl
 pint
+=======
+pall
+rotr
+pall
+>>>>>>> fa31c195074228e555da464ede58e06b0f4a9290
