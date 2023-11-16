@@ -25,7 +25,7 @@ void pchar(stack_t **stack, unsigned int line_number)
 
 /**
  * sub - subtracts the top element of the stack from the second
- * 	top element of the stack.
+ * top element of the stack.
  * @stack: pointer to the header of DLL.
  * @line_number: the line number of the op command.
  */
@@ -52,7 +52,7 @@ void sub(stack_t **stack, unsigned int line_number)
 
 /**
  * _div - divides the top element of the stack from the second
- * 	top element of the stack.
+ * top element of the stack.
  * @stack: pointer to the header of DLL.
  * @line_number: the line number of the op command.
  */
@@ -84,7 +84,7 @@ void _div(stack_t **stack, unsigned int line_number)
 }
 /**
  * pstr - prints the string starting at the top of the stack,
- * 	followed by a new line.
+ * followed by a new line.
  * @stack: pointer to the header of DLL.
  * @line_number: the line number of the op command.
  */
