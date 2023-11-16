@@ -1,8 +1,8 @@
 push 1
 push 2
+push 90
 push 3
-push 97
-pchar
-pall
-mul
+pint
+sub
+
 pall

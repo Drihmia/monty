@@ -17,6 +17,7 @@ void (*wrapper(opt_arg * op_arg))(stack_t **stack, unsigned int line_number)
 		{"queue", (void(*)(void))queue},
 		{"swap", (void(*)(void))swap},
 		{"add", (void(*)(void))add},
+		{"sub", (void(*)(void))sub},
 		{"mul", (void(*)(void))mul},
 		{"mod", (void(*)(void))mod},
 		{"nop", (void(*)(void))nop},

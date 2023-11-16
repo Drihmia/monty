@@ -1,5 +1,3 @@
-#include <stdio.h>
-#define _POSIX_C_SOURCE 200809L
 #include "monty.h"
 void help(void);
 char *Mode = "stack";
