@@ -1,6 +1,4 @@
 #include "monty.h"
-void help(void);
-char *Mode = "stack";
 
 /**
  * main- Entry point.
@@ -14,7 +12,7 @@ int main(int ac, char **av)
 	char *line = NULL, *cmd_line[ARGS_SIZE];
 	size_t size_line = 1;
 	void (*op_func)(stack_t **stack, unsigned int line_number);
-	opt_arg op_arg = {NULL, 1, 0, 0};
+	opt_arg op_arg = {NULL, 1, 0, 0, "stack"};
 
 	if (ac == 2)
 	{

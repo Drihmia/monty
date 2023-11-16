@@ -35,7 +35,7 @@ void (*wrapper(opt_arg * op_arg))(stack_t **stack, unsigned int line_number)
 		{
 			if (!strcmp(op_arg->opcode, "push"))
 			{
-				(((push_t *)ops)[i]).f(&op_arg->stack, op_arg->line_number, op_arg->num);
+				(((push_t *)ops)[i]).f(op_arg);
 				return (NULL);
 			}
 			return (((instruction_t *)ops)[i].f);
@@ -49,35 +49,33 @@ void (*wrapper(opt_arg * op_arg))(stack_t **stack, unsigned int line_number)
 
 /**
  * push - push an element to the stack.
- * @stack: pointer to the header of DLL.
- * @line_number: the line number of the op command.
- * @num: the string that shoud hold an integer the data.
+ * @op_arg: operation arguments struct (read monty.h)
  * Return: 1 on failure and 0 on success.
  */
-void push(stack_t **stack, unsigned int line_number, char *num)
+void push(opt_arg *op_arg)
 {
 	int n = 0;
 
-	if (!num)
+	if (!op_arg->num)
 	{
-		print_error("usage: push integer", line_number);
+		print_error("usage: push integer", op_arg->line_number);
 		errno = 1;
 		return;
 	}
 
-	n = _atoi(num);
+	n = _atoi(op_arg->num);
 
 	if (errno)
 	{
 		/* sth wrong happened in _atoi */
-		print_error("usage: push integer", line_number);
+		print_error("usage: push integer", op_arg->line_number);
 		return;
 	}
 
-	if (!strcmp(Mode, "stack"))
-		add_dnodeint(stack, n);
+	if (!strcmp(op_arg->mode, "stack"))
+		add_dnodeint(&op_arg->stack, n);
 	else
-		add_dnodeint_end(stack, n);
+		add_dnodeint_end(&op_arg->stack, n);
 }
 /**
  * pall - print all  elements of the stack.

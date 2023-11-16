@@ -64,6 +64,27 @@ typedef struct generic_s
 	void (*f)(void);
 } generic_t;
 
+
+/**
+ * struct operations_s - operations arguments
+ *
+ * @opcode: the opcode
+ * @line_number: the opcode
+ * @num: the opcode
+ * @stack: the opcode
+ * @mode: stack or queue
+ *
+ * Description: opcode and its function
+ */
+typedef struct operations_s
+{
+	stack_t *stack;
+	unsigned int line_number;
+	char *num;
+	char *opcode;
+	char *mode;
+} opt_arg;
+
 /**
  * struct push_s - push
  *
@@ -75,30 +96,12 @@ typedef struct generic_s
 typedef struct push_s
 {
 	char *opcode;
-	void (*f)(stack_t **stack, unsigned int line_number, char *num);
+	void (*f)(opt_arg *op_arg);
 } push_t;
-
-/**
- * struct operations_s - operations arguments
- *
- * @opcode: the opcode
- * @line_number: the opcode
- * @num: the opcode
- * @stack: the opcode
- *
- * Description: opcode and its function
- */
-typedef struct operations_s
-{
-	stack_t *stack;
-	unsigned int line_number;
-	char *num;
-	char *opcode;
-} opt_arg;
 
 /* ---------------INSTRUCTIONS------------------ */
 void (*get_op_func(char *s))(stack_t **stack, unsigned int line_number);
-void push(stack_t **stack, unsigned int line_number, char *num);
+void push(opt_arg *);
 void pull(stack_t **stack, unsigned int line_number);
 void pint(stack_t **stack, unsigned int line_number);
 void pall(stack_t **stack, unsigned int line_number);
@@ -136,7 +139,7 @@ int delete_dnodeint_at_index(stack_t **head, unsigned int index);
 FILE *open_file(char *file_name);
 char **tokenize(char *line, char **);
 void free_arr_str(char **arr_str);
-void (*wrapper(opt_arg * op_arg))(stack_t **stack, unsigned int line_number);
+void (*wrapper(opt_arg *op_arg))(stack_t **stack, unsigned int line_number);
 
 /* -----------errors-----------*/
 void print_error(char *string, int line_number);
