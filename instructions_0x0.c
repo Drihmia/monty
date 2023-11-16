@@ -49,25 +49,30 @@ void (*wrapper(opt_arg * op_arg))(stack_t **stack, unsigned int line_number)
  * @num: the string that shoud hold an integer the data.
  * Return: 1 on failure and 0 on success.
  */
-int push(stack_t **stack, unsigned int line_number, char *num)
+void push(stack_t **stack, unsigned int line_number, char *num)
 {
 	int n = 0;
 
-	/*TODO: no need for return value here */
-	if (num)
-		n = _atoi(num);
-	else
-		errno = 1;
-	if (errno)
+	if (!num)
 	{
 		print_error("usage: push integer", line_number);
-		return (1);
+		errno = 1;
+		return;
 	}
+
+	n = _atoi(num);
+
+	if (errno)
+	{
+		/* sth wrong happened in _atoi */
+		print_error("usage: push integer", line_number);
+		return;
+	}
+
 	if (!strcmp(Mode, "stack"))
 		add_dnodeint(stack, n);
 	else
 		add_dnodeint_end(stack, n);
-	return (0);
 }
 /**
  * pall - print all  elements of the stack.
