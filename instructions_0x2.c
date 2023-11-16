@@ -82,4 +82,17 @@ void _div(stack_t **stack, unsigned int line_number)
 	*stack = (*stack)->next;
 	free(tmp);
 }
+/**
+ * pstr - prints the string starting at the top of the stack,
+ * 	followed by a new line.
+ * @stack: pointer to the header of DLL.
+ * @line_number: the line number of the op command.
+ */
+void pstr(stack_t **stack, unsigned int line_number)
+{
+	while (*stack && ((*stack)->n > 0 || (*stack)->n <= 127))
+	{
+		printf("%c\n", (*stack)->n);
+	}
+}
 

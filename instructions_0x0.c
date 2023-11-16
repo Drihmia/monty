@@ -24,6 +24,7 @@ void (*wrapper(opt_arg * op_arg))(stack_t **stack, unsigned int line_number)
 		{"nop", (void(*)(void))nop},
 		{"push", (void(*)(void))push},
 		{"pchar", (void(*)(void))pchar},
+		{"pstr", (void(*)(void))pstr},
 		{NULL, NULL}
 	};
 	while (ops[i].opcode)
