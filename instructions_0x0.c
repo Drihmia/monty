@@ -104,7 +104,7 @@ void pint(stack_t **stack, unsigned int line_number)
 		errno = 2;
 		return;
 	}
-	print_stack(*stack);
+	printf("%d\n", (*stack)->n);
 }
 /**
  * pop - remove an element from the stack.
