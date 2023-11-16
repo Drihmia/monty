@@ -147,5 +147,8 @@ void unkn(stack_t **stack, unsigned int line_number, char *opcode);
 int _isdigit(char);
 int _atoi(char *);
 
+/* ------------------ freeing ------------- */
+void hundler(FILE **afile, char **aline, stack_t **astack);
+
 #endif
 

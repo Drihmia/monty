@@ -27,13 +27,9 @@ int main(int ac, char **av)
 				op_func = wrapper(&op_arg);
 				if (op_func)
 					op_func(&op_arg.stack, op_arg.line_number);
-
 				if (errno)
 				{
-					/*TODO: abstract this to separate function */
-					fclose(file);
-					free(line);
-					free_stack(op_arg.stack);
+					hundler(&file, &line, &op_arg.stack);
 					errno = 0;
 					exit(EXIT_FAILURE);
 				}
@@ -41,7 +37,7 @@ int main(int ac, char **av)
 			}
 			op_arg.line_number++;
 		}
-		fclose(file), free(line), free_stack(op_arg.stack);
+		hundler(&file, &line, &op_arg.stack);
 	}
 	else
 	{
@@ -89,4 +85,7 @@ void queue(stack_t **stack, unsigned int line_number)
 	(void) stack, (void) line_number;
 	Mode = "queue";
 }
-
+void hundler(FILE **afile, char **aline, stack_t **astack)
+{
+		fclose(*afile), free(*aline), free_stack(*astack);
+}
