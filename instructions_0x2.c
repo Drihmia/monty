@@ -1,5 +1,27 @@
 #include "monty.h"
 
+/**
+ * swap - swap
+ * @stack: pointer to the header of DLL.
+ * @line_number: the line number of the op command.
+ */
+void swap(stack_t **stack, unsigned int line_number)
+{
+	stack_t *tmp;
+
+	if (!*stack || !(*stack)->next)
+	{
+		print_error("can't swap, stack too short", line_number);
+		errno = 1;
+		return;
+	}
+	tmp = (*stack)->next;
+	(*stack)->prev = (*stack)->next;
+	(*stack)->next = tmp->next;
+	tmp->prev = 0;
+	tmp->next = *stack;
+	*stack = tmp;
+}
 
 /**
  * pchar - prints the char at the top of the stack, followed by a new line.
@@ -21,89 +43,6 @@ void pchar(stack_t **stack, unsigned int line_number)
 		return;
 	}
 	printf("%c\n", (*stack)->n);
-}
-
-/**
- * rotr - rotates the stack to the bottom.
- * Description: The last element of the stack,
- * becomes the top element of the stack
- * @stack: pointer to the header of DLL.
- * @line_number: the line number of the op command.
- */
-void rotr(stack_t **stack, unsigned int line_number)
-{
-	stack_t *tail = *stack;
-	(void)line_number;
-
-	if (!*stack)
-		return;
-
-	for (; tail->next; tail = tail->next)
-		;
-	tail->prev->next = 0;
-	tail->next = *stack;
-	*stack = tail;
-}
-/**
- * sub - subtracts the top element of the stack from the second
- * top element of the stack.
- * @stack: pointer to the header of DLL.
- * @line_number: the line number of the op command.
- * Return: None.
- */
-void sub(stack_t **stack, unsigned int line_number)
-{
-	stack_t *tmp;
-
-	if (!*stack || !(*stack)->next)
-	{
-		print_error("can't sub, stack too short", line_number);
-		errno = 1;
-		return;
-	}
-	/* ----- sub's operation ----- */
-	(*stack)->next->n -= (*stack)->n;
-
-	/* ---- node's deletions ----- */
-	tmp = *stack;
-	(*stack)->next->prev = 0;
-	*stack = (*stack)->next;
-	free(tmp);
-}
-
-
-/**
- * _div - divides the top element of the stack from the second
- * top element of the stack.
- * @stack: pointer to the header of DLL.
- * @line_number: the line number of the op command.
- * Return: None.
- */
-void _div(stack_t **stack, unsigned int line_number)
-{
-	stack_t *tmp;
-
-	if (!*stack || !(*stack)->next)
-	{
-		print_error("can't div, stack too short", line_number);
-		errno = 1;
-		return;
-	}
-	if (!(*stack)->n)
-	{
-		print_error("division by zero", line_number);
-		errno = 1;
-		return;
-	}
-
-	/* ----- div's operation ----- */
-	(*stack)->next->n /= (*stack)->n;
-
-	/* ---- node's deletions ----- */
-	tmp = *stack;
-	(*stack)->next->prev = 0;
-	*stack = (*stack)->next;
-	free(tmp);
 }
 /**
  * pstr - prints the string starting at the top of the stack,
@@ -161,3 +100,28 @@ void rotl(stack_t **stack, unsigned int line_number)
 		ref->next = NULL;
 	}
 }
+
+
+/**
+ * rotr - rotates the stack to the bottom.
+ * Description: The last element of the stack,
+ * becomes the top element of the stack
+ * @stack: pointer to the header of DLL.
+ * @line_number: the line number of the op command.
+ */
+void rotr(stack_t **stack, unsigned int line_number)
+{
+	stack_t *tail = *stack;
+	(void)line_number;
+
+	if (!*stack)
+		return;
+
+	for (; tail->next; tail = tail->next)
+		;
+	tail->prev->next = 0;
+	tail->next = *stack;
+	*stack = tail;
+}
+
+
