@@ -66,6 +66,13 @@ void _div(stack_t **stack, unsigned int line_number)
 		errno = 1;
 		return;
 	}
+	if (!(*stack)->n)
+	{
+		print_error("division by zero", line_number);
+		errno = 1;
+		return;
+	}
+
 	/* ----- div's operation ----- */
 	(*stack)->next->n /= (*stack)->n;
 
