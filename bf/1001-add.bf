@@ -6,7 +6,6 @@
 ]		End the loop in c1
 ,		Read 2nd input in c1
 [		Start the loop at c1
-+		Add 1 to c1
-< - >		Decrement c0 and move to c1
+< + > -		Move data pointer to c0 increment it; move left to c1 decrement
 ]		End the loop in c0
 < .		Print c1
